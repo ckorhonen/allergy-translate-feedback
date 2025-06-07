@@ -1,0 +1,7 @@
+name = "allergy-translate-feedback"
+main = "src/worker.js"
+workers_dev = true
+compatibility_date = "2000-01-01"
+
+[vars]
+REPLY_FROM = "feedback@allergytranslate.app"
