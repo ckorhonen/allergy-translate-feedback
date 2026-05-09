@@ -96,3 +96,6 @@ The worker uses modern JavaScript and Cloudflare's email handling APIs. Key feat
 
 Private - All rights reserved
 
+## Agent Workflow
+
+See [AGENTS.md](./AGENTS.md) for repo-specific development and agent instructions.
