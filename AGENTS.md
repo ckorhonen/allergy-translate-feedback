@@ -6,10 +6,11 @@ This is a Cloudflare Worker that processes Allergy Translate email feedback and 
 
 ## Commands
 
-- `npm install`: install dependencies.
+- Node.js and npm with the committed `package-lock.json` are required; use `npm ci`.
 - `npm run dev`: run `wrangler dev`.
 - `npm run start`: alternate local Wrangler dev command.
 - `npm run deploy`: deploy with Wrangler.
+- There is no configured lint or test command. `node --check src/worker.js` is the local syntax check; for an email-flow change, add or run a Worker-compatible test that mocks `EmailMessage` and `message.reply()` rather than sending an email.
 
 ## Repository Map
 
@@ -20,5 +21,5 @@ This is a Cloudflare Worker that processes Allergy Translate email feedback and 
 ## Agent Workflow
 
 - Do not commit API keys or email credentials. Use `wrangler secret put` for `WORKFLOW_API_KEY`, `REPLY_FROM`, and optional `BCC`.
-- Keep Cloudflare Email behavior and WorkflowAI request/response handling easy to audit.
-- Validate syntax and behavior with Wrangler commands before deployment-oriented changes.
+- `src/worker.js` sends the inbound email body to WorkflowAI with a POST request, then calls `message.reply()`; a live email event can therefore contact a provider and send email. Treat live email and remote Worker validation as an operational boundary, and use local/source checks by default for instruction-only work.
+- Keep Cloudflare Email behavior and WorkflowAI request/response handling easy to audit. Complete authorized changes through the syntax check and relevant mocked flow coverage, repair failures caused by the change, and report baseline blockers and actual checks.
